@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:24:51 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/24 15:29:48 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/02/27 12:39:48 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,37 @@
 
 char	*find_path(char **env)
 {
-	while ((env) && (ft_strncmp("PATH=",*env, 5)))
+	while ((ft_strncmp("PATH=",*env, 5)) && env)
 		env++;
 	if (env)
 		return (*env + 5);
 	return (0);
 }
 
-char	**get_path(char **env)
-{
-	char	**path;
-
-	path = ft_split((find_path(env)), ':');
-	return (path);
-}
-
-char	*get_cmdpath(char **paths, char *cmd)
+char	*get_cmdpath(char **env, char *cmd)
 {
 	char	*tmp;
+	char	*tmp2;
 	char	**path;
-
-	path = get_path(paths);
-	while (*path)
+	int		i;
+	
+	if (find_path(env) == 0)
+		return (0);
+	i = 0;
+	path = ft_split((find_path(env)), ':');
+	while (path[i])
 	{
-		tmp = ft_strjoin((ft_strjoin(path[0], "/")), cmd);
+		tmp2 = ft_strjoin(path[i], "/");
+		tmp = ft_strjoin(tmp2, cmd);
+		free(tmp2);
 		if (access(tmp, F_OK)== 0)
+		{
+			freesplit(path);
 			return (tmp);
-		path++;
+		}
+		free (tmp);
+		i++;
 	}
-	return (NULL);
+	freesplit(path);
+	return (0);
 }

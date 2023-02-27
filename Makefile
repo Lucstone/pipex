@@ -6,14 +6,14 @@
 #    By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/17 11:56:41 by lnaidu            #+#    #+#              #
-#    Updated: 2023/02/24 18:15:25 by lnaidu           ###   ########.fr        #
+#    Updated: 2023/02/27 10:26:39 by lnaidu           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-SRC = ./test.c ./command.c
+SRC = ./test.c ./command.c ./free.c
 
 #COLORS
 RED = \033[1;31m

@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:41:40 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/24 17:53:10 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/02/27 16:37:54 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,31 @@
 
 int	main(int ac, char **av, char **env)
 {
-	char	*path;
-	char	**tab;
+	t_data	prog;
+	int		fd[2];
 	
-	tab = malloc(sizeof(char*));
-	tab = ft_split(av[1], ' ');
-	path = get_cmdpath(env, *tab);
-	printf("%s\n", path);
+	/*prog.file1 = open (av[1], O_RDONLY);
+	if (prog.file1 < 0)
+	{
+		perror("Error");
+		return(0);
+	}*/
 	if (ac > 1)
-		if (execve(path, &tab[0], env) == -1)
+	{
+		//fd[0] = read;
+		//fd[1] = write;
+		if (pipe(fd) == -1)
+			return (1);
+		prog.tab = ft_split(av[1], ' ');
+		prog.path = get_cmdpath(env, *prog.tab);
+		if (execve(prog.path, &prog.tab[0], env) == -1)
 		{
 			perror("execve");
-			free(path);
-			free(tab);
-			system("leaks pipex");
+			freesplit (prog.tab);
+			//system("leaks pipex");
 			return (0);
 		}
-	system("leaks pipex");
+	}
+	//system("leaks pipex");
 	return (0);
 }
