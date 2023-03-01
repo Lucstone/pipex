@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:41:40 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/27 16:37:54 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/01 17:19:01 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,69 @@ int	main(int ac, char **av, char **env)
 	t_data	prog;
 	int		fd[2];
 	
-	/*prog.file1 = open (av[1], O_RDONLY);
+	prog.file1 = open (av[1], O_RDONLY);
 	if (prog.file1 < 0)
 	{
 		perror("Error");
 		return(0);
-	}*/
+	}
+	prog.file2 = open (av[ac - 1], O_TRUNC | O_CREAT | O_RDWR, 0666);
+	if (prog.file2 < 0)
+	{
+		perror("Error");
+		return(0);
+	}
 	if (ac > 1)
 	{
 		//fd[0] = read;
 		//fd[1] = write;
 		if (pipe(fd) == -1)
 			return (1);
-		prog.tab = ft_split(av[1], ' ');
+		prog.pid1 = fork();
+		if (prog.pid1 < 0)
+			return (1);
+		if (prog.pid1 == 0)
+		{
+			dup2(fd[1], STDOUT_FILENO);
+			close(fd[0]);
+			dup2(prog.file1, 0);
+			close(fd[1]);
+			prog.tab = ft_split(av[2], ' ');
+			prog.path = get_cmdpath(env, *prog.tab);
+			if (execve(prog.path, &prog.tab[0], env) == -1)
+			{
+				perror("execve");
+				freesplit (prog.tab);
+				//system("leaks pipex");
+				return (0);
+			}
+		}
+		prog.pid2 = fork();
+		if (prog.pid2 < 0)
+			return (1);
+		if (prog.pid2 == 0)
+		{
+			dup2(fd[0], STDIN_FILENO);
+			close(fd[1]);
+			dup2(prog.file2, 1);
+			close(fd[0]);
+			prog.tab = ft_split(av[3], ' ');
+			prog.path = get_cmdpath(env, *prog.tab);
+			if (execve(prog.path, &prog.tab[0], env) == -1)
+			{
+				perror("execve");
+				freesplit (prog.tab);
+				//system("leaks pipex");
+				return (0);
+			}
+		}
+
+		close(fd[0]);
+		close(fd[1]);
+		
+		waitpid(prog.pid1, NULL, 0);
+		waitpid(prog.pid2, NULL, 0);
+		/*prog.tab = ft_split(av[1], ' ');
 		prog.path = get_cmdpath(env, *prog.tab);
 		if (execve(prog.path, &prog.tab[0], env) == -1)
 		{
@@ -95,7 +145,7 @@ int	main(int ac, char **av, char **env)
 			freesplit (prog.tab);
 			//system("leaks pipex");
 			return (0);
-		}
+		}*/
 	}
 	//system("leaks pipex");
 	return (0);

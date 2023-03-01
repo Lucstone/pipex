@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:01 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/27 16:21:49 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/01 16:45:04 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ typedef struct s_data
 {
 	int		file1;
 	int		file2;
+	int		pid1;
+	int		pid2;
 	char	*path;
 	char	**tab;
 }				t_data;
