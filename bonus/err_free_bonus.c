@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   err_free_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:13:26 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/27 11:29:37 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/03 14:44:50 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 void	freesplit(char **tab)
 {
@@ -24,4 +24,16 @@ void	freesplit(char **tab)
 	}
 	free(tab[i]);
 	free(tab);
+}
+
+int	err(char *str)
+{
+	perror(str);
+	return (12);
+}
+
+void	ft_close(t_data prog)
+{
+	close(prog.fd[0]);
+	close(prog.fd[1]);
 }

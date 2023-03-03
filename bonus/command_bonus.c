@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   command_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 11:24:51 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/02/27 12:39:48 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/03 14:45:13 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*find_path(char **env)
 {
@@ -27,7 +27,7 @@ char	*get_cmdpath(char **env, char *cmd)
 	char	*tmp2;
 	char	**path;
 	int		i;
-	
+
 	if (find_path(env) == 0)
 		return (0);
 	i = 0;
@@ -37,7 +37,7 @@ char	*get_cmdpath(char **env, char *cmd)
 		tmp2 = ft_strjoin(path[i], "/");
 		tmp = ft_strjoin(tmp2, cmd);
 		free(tmp2);
-		if (access(tmp, F_OK)== 0)
+		if (access(tmp, F_OK) == 0)
 		{
 			freesplit(path);
 			return (tmp);
@@ -46,5 +46,5 @@ char	*get_cmdpath(char **env, char *cmd)
 		i++;
 	}
 	freesplit(path);
-	return (0);
+	return (NULL);
 }
