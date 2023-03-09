@@ -6,7 +6,7 @@
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 10:38:01 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/03/03 17:43:18 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:09:33 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <errno.h>
 # include <sys/wait.h>
 
-char	*find_path(char **env);
-char	**get_path(char **env);
-char	*get_cmdpath(char **paths, char *cmd);
-void	freesplit(char **tab);
+char	*ft_find_path(char **env);
+char	**ft_get_path(char **env);
+char	*ft_get_cmdpath(char **paths, char *cmd);
+void	ft_freesplit(char **tab);
 
 typedef struct s_data
 {
@@ -43,10 +43,21 @@ typedef struct s_data
 	char	**tab;
 }				t_data;
 
-void	firstprocess(t_data proc, char **av, char **env);
-void	lastprocess(t_data proc, char **av, char **env, int ac);
-void	midprocess(t_data proc, char **av, char **env, int j);
-int		err(char *str);
+int		ft_openfile1(char **av, t_data prog);
+int		ft_openfile(char **av, t_data prog);
+int		ft_heredoc(t_data hdoc, char **av);
+void	ft_firstprocess(t_data proc, char **av, char **env);
+void	ft_firstprocesshd(t_data proc, char **av, char **env);
+void	ft_lastprocess(t_data proc, char **av, char **env, int ac);
+void	ft_midprocess(t_data proc, char **av, char **env, int j);
+int		ft_err(char *str);
+int		ft_err2(char *str, int fd);
 void	ft_close(t_data prog);
+int		ft_mainh(int ac, char **av, char **env);
+int		ft_mainb(int ac, char **av, char **env);
+int		ft_errexcev(char *str);
+int		ft_mainfilenotokb(int ac, char **av, char **env);
+void	ft_firstprocess1(t_data proc, char **av, char **env);
+int		ft_open(char **av);
 
 #endif

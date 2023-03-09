@@ -10,7 +10,7 @@ SRCGNL = ./gnl/get_next_line_utils.c ./gnl/get_next_line.c
 
 all : ${NAME}
 
-OBJS = ${SRC:.c=.o} ${SRCPF:.c=.o} ${SRCPF:.c=.o}
+OBJS = ${SRC:.c=.o} ${SRCPF:.c=.o} ${SRCGNL:.c=.o}
 
 .c.o :
 	@${CC} ${CFLAGS} -I libft.h -I get_next_line.h -I ft_printf.h  -c $< -o ${<:.c=.o}

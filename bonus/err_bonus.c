@@ -1,39 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   err_free.c                                         :+:      :+:    :+:   */
+/*   err_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lnaidu <lnaidu@student.42nice.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 10:13:26 by lnaidu            #+#    #+#             */
-/*   Updated: 2023/03/03 14:40:10 by lnaidu           ###   ########.fr       */
+/*   Updated: 2023/03/08 17:49:45 by lnaidu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
-void	freesplit(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab[i]);
-	free(tab);
-}
-
-int	err(char *str)
+int	ft_err(char *str)
 {
 	perror(str);
+	exit (1);
+}
+
+int	ft_err2(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
 	return (12);
 }
 
-void	ft_close(t_data prog)
+int	ft_errexcev(char *str)
 {
-	close(prog.fd[0]);
-	close(prog.fd[1]);
+	write(2, str, ft_strlen (str));
+	write(2, ": command not found\n", 28);
+	exit (1);
+}
+
+int	ft_open(char **av)
+{
+	int	file11;
+
+	file11 = open (av[1], O_DIRECTORY);
+	if (file11 != -1)
+		return (-1);
+	else
+		file11 = open (av[1], O_RDONLY);
+	return (file11);
 }
